@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Analyzer HomePage</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='homepage/style.css') }}">
+</head>
+
+<body>
+    <video id="video" width="640" height="480" autoplay style="background-color: grey"></video>
+    <button id="snap">Take Photo</button>
+    <canvas id="myCanvas" width="640" height="480" style="background-color: grey"></canvas>
+    <button onclick="DownloadCanvasAsImage()">Download</button>
+    <script src="{{ url_for('static', filename='homepage/main.js')}}"></script>
+</body>
+
+</html>
