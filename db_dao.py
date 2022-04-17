@@ -26,8 +26,11 @@ def create_user_preferences(music_id: str, user_email: str) -> bool:
             with sql.connect("user_data.sqlite3") as connection:
                 cursor = connection.cursor()
                 cursor.execute(
-                    "INSERT INTO User_Selection (music_id,user_email) VALUES (?,?,)",
-                    (music_id, user_email),
+                    "INSERT INTO User_Selection (music_id,user_email) VALUES (?,?)",
+                    (
+                        music_id,
+                        user_email,
+                    ),
                 )
             return True
         # preference already existed
@@ -46,7 +49,10 @@ def user_preference_is_existed(music_id: str, user_email: str) -> bool:
         cursor = connection.cursor()
         cursor.execute(
             "SELECT music_id FROM User_Selection where music_id=? and user_email=?",
-            (music_id, user_email),
+            (
+                music_id,
+                user_email,
+            ),
         )
         user_preference = cursor.fetchall()
         if user_preference:
@@ -84,3 +90,7 @@ def check_credentials(email: str, password: str) -> bool:
             return True
         else:
             return False
+
+
+if __name__ == "__main__":
+    create_user_preferences(music_id="1", user_email="112")

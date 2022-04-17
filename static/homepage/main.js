@@ -14,7 +14,7 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
 // Trigger photo take
 document.getElementById("snap").addEventListener("click", function() {
-context.drawImage(video, 0, 0, 640, 480);  // copy video frame to canvas
+context.drawImage(video, 0, 0, 640, 400);  // copy video frame to canvas
 });
 
 function DownloadCanvasAsImage(){

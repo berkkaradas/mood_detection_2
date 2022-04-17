@@ -1,19 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emotion Analyzer HomePage</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='homepage/style.css') }}">
-</head>
+  <body>
+    <section class="gallery">
+      <div class="container">
+        <div class="grid">
+          <div class="column-xs-12 column-md-6">
+            <figure class="img-container">
+              <video id="video" width="640" height="400" autoplay style="background-color: #00ffd5"></video>
+              <button id="snap" class="button-64" role="button"><span class="text">Take Photo</span></button>
+              <figcaption class="img-content">
+                <h2 class="title">Camera Zone</h2>
+                <h3 class="category">Your live video will shown here</h3>
+              </figcaption>
+              <span class="img-content-hover">
+                <h2 class="title">Camera Zone</h2>
+                <h3 class="category">Your live video will be shown here</h3>
+              </span>
+            </figure>
+          </div>
+          <div class="column-xs-12 column-md-6">
+           <form method="post">
+            <figure class="img-container">
+              <canvas id="myCanvas" width="640" height="400" style="background-color: #00ffd5"></canvas>
+              <button type="submit" name="download_image_btn" onclick="DownloadCanvasAsImage()" class="button-64"><span class="text">Detect Mood</span></button>
+              <figcaption class="img-content">
+                <h2 class="title">Photo Snapshot</h2>
+                <h3 class="category">It looks fine</h3>
+              </figcaption>
+              <span class="img-content-hover">
+                <h2 class="title">Photo Snapshot</h2>
+                <h3 class="category">It looks fine</h3>
+              </span>
+            </figure>
+           </form>
+          </div>
+          <div class="column-xs-12">
+            <section class="dl-blurbs">
+            <dl>
+                <dt>Mood Detection</dt>
+                <dd>Person Mood: {{ person_mood }} </dd>
+                <dd>Music Name: {{ music_name }} </dd>
+                <dd>Music Artist: {{ music_artist }} </dd>
+                <div class="container-select">
+                  <form >
+                      <button type="submit" name="like_btn" value="like_btn" class="button-85"><span class="text">I LIKE IT</span></button>
+                    </form>
+                    <form method="post">
+                        <button type="submit" name="dont_like_btn" value="dont_like_btn" class="button-85"><span class="text">I DON'T LIKE IT</span></button>
+                    </form>
+                </div>
+            </dl>
 
-<body>
-    <video id="video" width="640" height="480" autoplay style="background-color: grey"></video>
-    <button id="snap">Take Photo</button>
-    <canvas id="myCanvas" width="640" height="480" style="background-color: grey"></canvas>
-    <button onclick="DownloadCanvasAsImage()">Download</button>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const imgContent = document.querySelectorAll('.img-content-hover');
+
+      function showImgContent(e) {
+        for (var i = 0; i < imgContent.length; i++) {
+          x = e.pageX;
+          y = e.pageY;
+          imgContent[i].style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        }
+      };
+      document.addEventListener('mousemove', showImgContent);
+    </script>
     <script src="{{ url_for('static', filename='homepage/main.js')}}"></script>
-</body>
-
+  </body>
 </html>
+
+
+
+
+

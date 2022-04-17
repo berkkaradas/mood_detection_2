@@ -1,11 +1,16 @@
+from cProfile import label
+
 from pandas import read_excel
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from keras.applications.vgg16 import preprocess_input
 from numpy import argmax, expand_dims
+from random import choice
 
 
 MUSIC_DATA = read_excel("data/music_data.xlsx")
+
+ACTUAL_DATA = MUSIC_DATA[["SONG", "ARTIST", "Label", "LINK"]]
 
 
 def detect_mood(file_path: str) -> dict:
@@ -27,7 +32,7 @@ def detect_mood(file_path: str) -> dict:
 
     predictions = MOOD_DETECTION_MODEL.predict(x)
     predictions = argmax(predictions, axis=1)
-    result["label"] = predictions
+    result["label"] = int(predictions)
     if predictions == 0:
         result["mood"] = "Neutral"
     elif predictions == 1:
@@ -40,6 +45,18 @@ def detect_mood(file_path: str) -> dict:
     return result
 
 
+def random_music_picker(label_number: int, user_email: str) -> str:
+    music_list = ACTUAL_DATA[ACTUAL_DATA["Label"] == label_number].SONG.to_list()
+    return str(choice(music_list))
+
+
+def music_artist_finder(music_name: str):
+    try:
+        music_name = ACTUAL_DATA[ACTUAL_DATA["SONG"] == music_name]
+        return str(music_name["ARTIST"].values[0])
+    except Exception as error:
+        return "We will rock you"
+
+
 if __name__ == "__main__":
-    # print(detect_mood(file_path="data/mustafa-kemal-ataturk.jpg"))
-    print(MUSIC_DATA["Label"])
+    print(music_artist_finder(random_music_picker(1)))
